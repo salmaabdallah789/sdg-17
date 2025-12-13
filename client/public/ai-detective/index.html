@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 17: AI Detective</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main Game Container -->
+    <div id="game-container" class="game-container">
+        
+        <!-- Splash Screen -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-content">
+                <div class="logo-animation">
+                    <div class="logo-icon">🔍</div>
+                    <h1 class="logo-title">SDG 17: AI Detective</h1>
+                    <p class="logo-subtitle">Solve mysteries. Use AI. Make an impact.</p>
+                </div>
+                <button id="start-btn" class="btn-primary pulse">Start Investigation</button>
+                <button id="splash-home-btn" class="btn-secondary" style="margin-top: 1rem;">← Back to Home</button>
+                <div class="settings-toggle">
+                    <label>
+                        <input type="checkbox" id="reduce-motion"> Reduce Motion
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Selection Screen -->
+        <div id="case-select-screen" class="screen">
+            <div class="screen-header">
+                <h2>Choose Your Case</h2>
+                <p class="subtitle">Each mystery reveals a hidden challenge</p>
+            </div>
+            <div id="case-cards" class="case-cards"></div>
+        </div>
+
+        <!-- Briefing Screen -->
+        <div id="briefing-screen" class="screen">
+            <div class="screen-header">
+                <h2 id="case-title"></h2>
+                <div class="sdg-tag" id="sdg-tag"></div>
+            </div>
+            <div class="briefing-content">
+                <div class="story-text" id="story-text"></div>
+                <div class="objective-box">
+                    <h3>Your Mission</h3>
+                    <ul id="objectives"></ul>
+                </div>
+                <div class="city-map-preview" id="city-map-preview"></div>
+                <div class="time-limit">
+                    <span class="timer-icon">⏱️</span>
+                    <span>Time Limit: <strong id="time-limit-value"></strong> minutes</span>
+                </div>
+                <button id="begin-investigation-btn" class="btn-primary">Begin Investigation</button>
+            </div>
+        </div>
+
+        <!-- Investigation Hub Screen -->
+        <div id="investigation-hub-screen" class="screen">
+            <div class="hub-header">
+                <div class="hub-info">
+                    <h2>Investigation Hub</h2>
+                    <div class="stats-bar">
+                        <div class="stat-item">
+                            <span class="stat-label">Time:</span>
+                            <span id="time-remaining" class="stat-value">--:--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Energy:</span>
+                            <span id="energy-remaining" class="stat-value">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Clues:</span>
+                            <span id="clues-found" class="stat-value">0/8</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="open-toolbox-btn" class="btn-secondary">AI Toolbox</button>
+                <button id="go-to-deduction-btn" class="btn-secondary">Go to Deduction Board</button>
+            </div>
+            <div class="map-container">
+                <div id="city-map" class="city-map"></div>
+            </div>
+            <div class="evidence-panel">
+                <h3>Evidence Collected <span id="evidence-count">(0)</span></h3>
+                <div id="evidence-grid" class="evidence-grid"></div>
+            </div>
+        </div>
+
+        <!-- Evidence Analysis Screen -->
+        <div id="evidence-analysis-screen" class="screen">
+            <div class="screen-header">
+                <h2>AI Evidence Analysis</h2>
+                <button id="close-analysis-btn" class="btn-secondary" type="button" style="cursor: pointer; z-index: 10; position: relative;">Close</button>
+            </div>
+            <div class="analysis-content">
+                <div id="tool-output" class="tool-output"></div>
+            </div>
+        </div>
+
+        <!-- Interrogation Screen -->
+        <div id="interrogation-screen" class="screen">
+            <div class="screen-header">
+                <h2>Interview</h2>
+                <button id="close-interrogation-btn" class="btn-secondary">End Interview</button>
+            </div>
+            <div class="interrogation-content">
+                <div class="npc-portrait">
+                    <div class="npc-avatar" id="npc-avatar"></div>
+                    <h3 id="npc-name"></h3>
+                    <div class="trust-meter">
+                        <span>Trust Level:</span>
+                        <div class="trust-bar">
+                            <div id="trust-fill" class="trust-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dialogue-box">
+                    <p id="npc-dialogue" class="npc-dialogue"></p>
+                </div>
+                <div class="dialogue-options" id="dialogue-options"></div>
+                <div class="lie-detection-ui" id="lie-detection-ui"></div>
+            </div>
+        </div>
+
+        <!-- Deduction Board Screen -->
+        <div id="deduction-board-screen" class="screen">
+            <div class="screen-header">
+                <h2>Deduction Board</h2>
+                <p class="subtitle">Connect the evidence to solve the mystery</p>
+                <button id="finalize-deduction-btn" class="btn-primary" disabled>Finalize Deduction</button>
+            </div>
+            <div class="deduction-board">
+                <div class="board-column" data-column="symptoms">
+                    <h3>Symptoms</h3>
+                    <div class="drop-zone" id="symptoms-zone"></div>
+                </div>
+                <div class="board-column" data-column="causes">
+                    <h3>Causes</h3>
+                    <div class="drop-zone" id="causes-zone"></div>
+                </div>
+                <div class="board-column" data-column="root">
+                    <h3>Root Cause</h3>
+                    <div class="drop-zone" id="root-zone"></div>
+                </div>
+            </div>
+            <div class="evidence-pool">
+                <h3>Available Evidence</h3>
+                <div id="evidence-pool" class="evidence-pool-grid"></div>
+            </div>
+            <svg id="connection-lines" class="connection-lines"></svg>
+        </div>
+
+        <!-- Final Accusation Screen -->
+        <div id="final-accusation-screen" class="screen">
+            <div class="screen-header">
+                <h2>Final Accusation</h2>
+                <p class="subtitle">Present your findings and propose a solution</p>
+            </div>
+            <div class="accusation-content">
+                <div class="accusation-section">
+                    <h3>Root Cause</h3>
+                    <div id="root-cause-options" class="option-grid"></div>
+                </div>
+                <div class="accusation-section">
+                    <h3>AI Solution</h3>
+                    <div id="ai-solution-options" class="option-grid"></div>
+                </div>
+                <div class="accusation-section">
+                    <h3>Ethics Safeguards <span class="required">(Select 2)</span></h3>
+                    <div id="ethics-options" class="option-grid multi-select"></div>
+                </div>
+                <div class="accusation-section">
+                    <h3>Partners <span class="required">(Select 2)</span></h3>
+                    <p class="sdg-17-note">💡 SDG 17 emphasizes partnerships for sustainable development</p>
+                    <div id="partner-options" class="option-grid multi-select"></div>
+                </div>
+                <button id="submit-accusation-btn" class="btn-primary" disabled>Submit Case Report</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="screen-header">
+                <h2>Case Closed</h2>
+            </div>
+            <div class="results-content">
+                <div class="badge-display">
+                    <div id="badge-icon" class="badge-icon">🏆</div>
+                    <h3 id="badge-title" class="badge-title">Detective</h3>
+                </div>
+                <div class="case-report">
+                    <h3>Case Report</h3>
+                    <div id="case-report-text" class="report-text"></div>
+                </div>
+                <div class="timeline-animation" id="timeline-animation"></div>
+                <div class="results-actions">
+                    <button id="write-proposal-btn" class="btn-primary">Write Your Proposal</button>
+                    <button id="replay-btn" class="btn-secondary">Play Another Case</button>
+                    <button id="home-btn" class="btn-secondary">Return Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proposal Submission Screen -->
+        <div id="proposal-screen" class="screen">
+            <div class="screen-header">
+                <h2>Your Proposal</h2>
+                <p class="subtitle">Reflect on your investigation and propose how AI can help save the world</p>
+            </div>
+            <div class="proposal-content">
+                <div class="proposal-guide">
+                    <h3>Guiding Questions</h3>
+                    <div class="guide-sections">
+                        <div class="guide-section">
+                            <h4>🔍 What Did You Discover?</h4>
+                            <ul>
+                                <li>What was the root cause of the problem you investigated?</li>
+                                <li>What patterns or biases did you find in the data?</li>
+                                <li>How did AI tools help or hinder your investigation?</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4>🤖 AI & Technology</h4>
+                            <ul>
+                                <li>How can AI be used responsibly to solve similar problems?</li>
+                                <li>What ethical safeguards are needed?</li>
+                                <li>How can we ensure AI doesn't create new inequalities?</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4>🌍 Saving the World & SDGs</h4>
+                            <ul>
+                                <li>How will your proposed solution help people?</li>
+                                <li>What partnerships are needed (SDG 17)?</li>
+                                <li>How can your decisions create positive change?</li>
+                                <li>How did you combine AI tools with SDG principles?</li>
+                                <li>Which Sustainable Development Goals does your solution address?</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4>💡 Your Action Plan</h4>
+                            <ul>
+                                <li>What specific steps would you take?</li>
+                                <li>Who would you partner with?</li>
+                                <li>How would you measure success?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="proposal-form">
+                    <label for="proposal-text" class="proposal-label">
+                        Your Proposal
+                        <span class="char-count" id="char-count">0 characters</span>
+                    </label>
+                    <textarea 
+                        id="proposal-text" 
+                        class="proposal-textarea"
+                        placeholder="Write your proposal here... Reflect on your investigation, the AI tools you used, the social impact of your findings, and propose how AI can be used responsibly to help save the world and achieve sustainable development goals."
+                    ></textarea>
+                    <div class="proposal-actions">
+                        <button id="save-proposal-btn" class="btn-secondary">Save Draft</button>
+                        <button id="copy-proposal-btn" class="btn-secondary">Copy Text</button>
+                        <button id="export-proposal-btn" class="btn-secondary">Export as .txt</button>
+                    </div>
+                    <div id="save-status" class="save-status"></div>
+                </div>
+                <div class="proposal-navigation">
+                    <button id="back-to-results-btn" class="btn-secondary">← Back to Results</button>
+                    <button id="proposal-home-btn" class="btn-primary">Return Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Toolbox Modal -->
+        <div id="toolbox-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>AI Toolbox</h2>
+                    <button id="close-toolbox-btn" class="close-btn">×</button>
+                </div>
+                <div class="toolbox-grid" id="toolbox-grid"></div>
+            </div>
+        </div>
+
+        <!-- Confetti Container -->
+        <div id="confetti-container"></div>
+
+        <!-- Clue Popup Modal -->
+        <div id="clue-popup-modal" class="clue-popup-modal">
+            <div class="clue-popup-content">
+                <div class="clue-popup-icon">🔍</div>
+                <h2 class="clue-popup-title">Evidence Found!</h2>
+                <h3 id="clue-popup-name" class="clue-popup-name"></h3>
+                <p id="clue-popup-description" class="clue-popup-description"></p>
+                <div class="clue-popup-animation-target" id="clue-popup-animation-target"></div>
+            </div>
+        </div>
+
+        <!-- Submission Confirmation Screen -->
+        <div id="submission-screen" class="screen">
+            <div class="screen-header">
+                <h2>Case Closed & Proposal Submitted! 🎉</h2>
+                <p class="subtitle">You've solved the mystery and shared your insights</p>
+            </div>
+            <div class="submission-content">
+                <div class="thank-you-card">
+                    <div class="thank-you-icon">🎉</div>
+                    <h3>Congratulations on Solving the Case!</h3>
+                    <p class="thank-you-message">
+                        Your proposal has been successfully submitted! You've demonstrated excellent detective 
+                        skills, critical thinking, and a deep understanding of how AI tools can uncover social 
+                        issues and contribute to achieving Sustainable Development Goals. Your insights are valuable!
+                    </p>
+                    <div class="evaluation-notice">
+                        <h4>📋 Evaluation Process</h4>
+                        <p>
+                            Your game performance, answers, and proposal will be evaluated by our panel of judges. 
+                            Winners will be selected based on:
+                        </p>
+                        <ul>
+                            <li>Quality of investigation and evidence collection</li>
+                            <li>Effective use of AI tools for analysis</li>
+                            <li>Depth of understanding of root causes</li>
+                            <li>Clarity and thoughtfulness of the written proposal</li>
+                            <li>Understanding of SDG principles and partnerships</li>
+                            <li>Overall impact and feasibility of proposed solutions</li>
+                        </ul>
+                        <p class="evaluation-timeline">
+                            <strong>Results will be announced soon!</strong>
+                        </p>
+                    </div>
+                    <div class="luck-message">
+                        <h4>🌟 Good Luck! 🌟</h4>
+                        <p>
+                            We wish you the best of luck in the evaluation! Your investigative skills and 
+                            thoughtful analysis show real promise. Keep exploring how AI can make a positive 
+                            impact on the world!
+                        </p>
+                    </div>
+                    <a href="https://unitar.org/" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-block; text-decoration: none; text-align: center;">Explore UNITAR Official Page →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
+

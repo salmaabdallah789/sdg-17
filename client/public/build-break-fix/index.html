@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 17: Build–Break–Fix (AI Edition)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main Game Container -->
+    <div id="game-container" class="game-container">
+        
+        <!-- Splash Screen -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-content">
+                <div class="logo-animation">
+                    <div class="logo-icon">🔧</div>
+                    <h1 class="logo-title">SDG 17: Build–Break–Fix</h1>
+                    <p class="logo-subtitle">AI Edition</p>
+                    <p class="logo-tagline">Build fast. Break smart. Fix responsibly.</p>
+                </div>
+                <button id="start-btn" class="btn-primary pulse">Start Building</button>
+                <button id="splash-home-btn" class="btn-secondary" style="margin-top: 1rem;">← Back to Home</button>
+                <div class="settings-toggle">
+                    <label>
+                        <input type="checkbox" id="reduce-motion"> Reduce Motion
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Play Screen -->
+        <div id="how-to-play-screen" class="screen">
+            <div class="screen-header">
+                <h2>How to Play</h2>
+                <p class="subtitle">A hackathon in a box</p>
+            </div>
+            <div class="how-to-content">
+                <div class="phase-explanation">
+                    <div class="phase-card build-phase">
+                        <div class="phase-icon">🏗️</div>
+                        <h3>BUILD (2 min)</h3>
+                        <p>Choose your problem, AI approach, data sources, and success metrics. Build fast!</p>
+                    </div>
+                    <div class="phase-card break-phase">
+                        <div class="phase-icon">💥</div>
+                        <h3>BREAK (2 min)</h3>
+                        <p>Discover what goes wrong. Find the real risks (3 out of 8 cards). Avoid red herrings!</p>
+                    </div>
+                    <div class="phase-card fix-phase">
+                        <div class="phase-icon">🔧</div>
+                        <h3>FIX (2 min)</h3>
+                        <p>Add ethics safeguards, governance, partnerships, and feasibility plans. Make it responsible!</p>
+                    </div>
+                </div>
+                <div class="rules-box">
+                    <h3>Rules</h3>
+                    <ul>
+                        <li>You have 2 minutes per phase</li>
+                        <li>Complete 3 challenges to become a champion</li>
+                        <li>Score based on impact, ethics, feasibility, and partnerships</li>
+                        <li>The winner isn't the smartest idea—it's the most responsibly improved one!</li>
+                    </ul>
+                </div>
+                <button id="continue-from-howto-btn" class="btn-primary">Continue</button>
+            </div>
+        </div>
+
+        <!-- Challenge Selection Screen -->
+        <div id="challenge-select-screen" class="screen">
+            <div class="screen-header">
+                <h2>Choose Your Challenge</h2>
+                <p class="subtitle">Each challenge tests different skills</p>
+            </div>
+            <div id="challenge-cards" class="challenge-cards"></div>
+        </div>
+
+        <!-- Build Phase Screen -->
+        <div id="build-screen" class="screen">
+            <div class="phase-header">
+                <div class="phase-title-section">
+                    <h2>🏗️ BUILD Phase</h2>
+                    <div class="timer-display">
+                        <span class="timer-icon">⏱️</span>
+                        <span id="build-timer" class="timer-value">2:00</span>
+                    </div>
+                </div>
+                <div class="challenge-info">
+                    <h3 id="current-challenge-name"></h3>
+                    <div class="sdg-badge-small" id="current-sdg-badge"></div>
+                </div>
+            </div>
+            <div class="build-content">
+                <div class="solution-preview-card">
+                    <h3>Your Solution Preview</h3>
+                    <div id="solution-preview" class="solution-preview">
+                        <div class="preview-item">
+                            <span class="preview-label">Problem:</span>
+                            <span id="preview-problem" class="preview-value">Not selected</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">Target Users:</span>
+                            <span id="preview-users" class="preview-value">Not selected</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">AI Approach:</span>
+                            <span id="preview-approach" class="preview-value">Not selected</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">Data Sources:</span>
+                            <span id="preview-data" class="preview-value">Not selected</span>
+                        </div>
+                        <div class="preview-item">
+                            <span class="preview-label">Success Metric:</span>
+                            <span id="preview-metric" class="preview-value">Not selected</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="build-options">
+                    <div class="option-section">
+                        <h3>1. Choose Problem</h3>
+                        <div id="problem-options" class="option-grid"></div>
+                    </div>
+                    <div class="option-section">
+                        <h3>2. Target Users</h3>
+                        <div id="user-options" class="option-grid"></div>
+                    </div>
+                    <div class="option-section">
+                        <h3>3. AI Approach</h3>
+                        <div id="approach-options" class="option-grid"></div>
+                    </div>
+                    <div class="option-section">
+                        <h3>4. Data Sources <span class="required">(Select 2)</span></h3>
+                        <div id="data-options" class="option-grid multi-select"></div>
+                    </div>
+                    <div class="option-section">
+                        <h3>5. Success Metric</h3>
+                        <div id="metric-options" class="option-grid"></div>
+                    </div>
+                </div>
+                <button id="finish-build-btn" class="btn-primary" disabled>Finish Building →</button>
+            </div>
+        </div>
+
+        <!-- Break Phase Screen -->
+        <div id="break-screen" class="screen">
+            <div class="phase-header">
+                <div class="phase-title-section">
+                    <h2>💥 BREAK Phase</h2>
+                    <div class="timer-display">
+                        <span class="timer-icon">⏱️</span>
+                        <span id="break-timer" class="timer-value">2:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="break-content">
+                <div id="alert-banner" class="alert-banner">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-text">
+                        <h3>ALERT! Your AI Solution Has Issues</h3>
+                        <p>Find the real risks (3 out of 8). Wrong picks reduce your score!</p>
+                    </div>
+                </div>
+                <div class="risk-cards-container">
+                    <h3>Risk Cards <span class="required">(Select 3)</span></h3>
+                    <div id="risk-cards" class="risk-cards-grid"></div>
+                </div>
+                <div class="selected-risks">
+                    <h3>Selected Risks: <span id="selected-risks-count">0/3</span></h3>
+                    <div id="selected-risks-list" class="selected-list"></div>
+                </div>
+                <button id="finish-break-btn" class="btn-primary" disabled>Finish Breaking →</button>
+            </div>
+        </div>
+
+        <!-- Fix Phase Screen -->
+        <div id="fix-screen" class="screen">
+            <div class="phase-header">
+                <div class="phase-title-section">
+                    <h2>🔧 FIX Phase</h2>
+                    <div class="timer-display">
+                        <span class="timer-icon">⏱️</span>
+                        <span id="fix-timer" class="timer-value">2:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="fix-content">
+                <div class="score-preview">
+                    <h3>Current Scores</h3>
+                    <div class="score-bars">
+                        <div class="score-bar-item">
+                            <span class="score-label">Impact</span>
+                            <div class="score-bar">
+                                <div id="impact-bar" class="score-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="impact-value" class="score-number">0</span>
+                        </div>
+                        <div class="score-bar-item">
+                            <span class="score-label">Ethics</span>
+                            <div class="score-bar">
+                                <div id="ethics-bar" class="score-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="ethics-value" class="score-number">0</span>
+                        </div>
+                        <div class="score-bar-item">
+                            <span class="score-label">Feasibility</span>
+                            <div class="score-bar">
+                                <div id="feasibility-bar" class="score-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="feasibility-value" class="score-number">0</span>
+                        </div>
+                        <div class="score-bar-item">
+                            <span class="score-label">Partnerships</span>
+                            <div class="score-bar">
+                                <div id="partnership-bar" class="score-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="partnership-value" class="score-number">0</span>
+                        </div>
+                        <div class="score-bar-item">
+                            <span class="score-label">Risk Debt</span>
+                            <div class="score-bar risk-debt">
+                                <div id="risk-debt-bar" class="score-fill risk" style="width: 100%"></div>
+                            </div>
+                            <span id="risk-debt-value" class="score-number">100</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fix-options">
+                    <div class="option-section">
+                        <h3>Ethics Safeguards <span class="required">(Select 2)</span></h3>
+                        <div id="ethics-options" class="option-grid multi-select"></div>
+                    </div>
+                    <div class="option-section">
+                        <h3>Governance <span class="required">(Select 1)</span></h3>
+                        <div id="governance-options" class="option-grid"></div>
+                    </div>
+                    <div class="option-section">
+                        <h3>Partners <span class="required">(Select 2)</span></h3>
+                        <p class="sdg-17-note">💡 SDG 17 emphasizes partnerships for sustainable development</p>
+                        <div id="partner-options" class="option-grid multi-select"></div>
+                    </div>
+                    <div class="option-section">
+                        <h3>Feasibility Plan <span class="required">(Select 1)</span></h3>
+                        <div id="feasibility-options" class="option-grid"></div>
+                    </div>
+                </div>
+                <button id="finish-fix-btn" class="btn-primary" disabled>Finish Fixing →</button>
+            </div>
+        </div>
+
+        <!-- Round Summary Screen -->
+        <div id="round-summary-screen" class="screen">
+            <div class="screen-header">
+                <h2>Round Complete!</h2>
+                <p class="subtitle">Challenge <span id="current-round-number">1</span> of 3</p>
+            </div>
+            <div class="summary-content">
+                <div class="case-card">
+                    <h3>Your Build Card</h3>
+                    <div id="case-card-content" class="case-card-content"></div>
+                    <button id="download-report-btn" class="btn-secondary">Download Report (JSON)</button>
+                </div>
+                <div class="summary-actions">
+                    <button id="write-proposal-round-btn" class="btn-primary">Write Your Proposal</button>
+                    <button id="next-challenge-btn" class="btn-secondary">Next Challenge →</button>
+                    <button id="summary-home-btn" class="btn-secondary">Return Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Results Screen -->
+        <div id="final-results-screen" class="screen">
+            <div class="screen-header">
+                <h2>Champion Profile</h2>
+                <p class="subtitle">You've completed all challenges!</p>
+            </div>
+            <div class="final-content">
+                <div class="champion-badge">
+                    <div id="final-badge-icon" class="badge-icon-large">🏆</div>
+                    <h2 id="final-badge-title" class="badge-title-large">Champion</h2>
+                </div>
+                <div class="timeline-container">
+                    <h3>Your Journey</h3>
+                    <div id="timeline" class="timeline"></div>
+                </div>
+                <div class="final-actions">
+                    <button id="write-proposal-btn" class="btn-primary">Write Your Proposal</button>
+                    <button id="final-replay-btn" class="btn-secondary">Play Again</button>
+                    <button id="final-home-btn" class="btn-secondary">Return Home</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proposal Submission Screen -->
+        <div id="proposal-screen" class="screen">
+            <div class="screen-header">
+                <h2>Your Proposal</h2>
+                <p class="subtitle">Reflect on your experience and propose how AI can help achieve SDGs</p>
+            </div>
+            <div class="proposal-content">
+                <div class="proposal-guide">
+                    <h3>Guiding Questions</h3>
+                    <div class="guide-sections">
+                        <div class="guide-section">
+                            <h4>🏗️ What Did You Build?</h4>
+                            <ul>
+                                <li>What AI solutions did you create in each challenge?</li>
+                                <li>What problems were you trying to solve?</li>
+                                <li>What AI approaches did you use (classification, forecasting, etc.)?</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4>💥 What Did You Break?</h4>
+                            <ul>
+                                <li>What risks and ethical issues did you discover?</li>
+                                <li>What biases or harms did you identify?</li>
+                                <li>How did breaking your solution help you understand it better?</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4>🔧 How Did You Fix It?</h4>
+                            <ul>
+                                <li>What ethics safeguards did you implement?</li>
+                                <li>What governance measures did you add?</li>
+                                <li>How did partnerships (SDG 17) help improve your solution?</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4>🤖 AI Tools & SDGs</h4>
+                            <ul>
+                                <li>How did you combine AI tools with Sustainable Development Goals?</li>
+                                <li>Which SDGs did your solutions address (SDG 3, 4, 11, 13, etc.)?</li>
+                                <li>How can AI be used responsibly to achieve SDG targets?</li>
+                                <li>What role do partnerships (SDG 17) play in AI solutions?</li>
+                            </ul>
+                        </div>
+                        <div class="guide-section">
+                            <h4>🌍 Your Action Plan</h4>
+                            <ul>
+                                <li>How will your improved solutions help save the world?</li>
+                                <li>What specific steps would you take to implement them?</li>
+                                <li>Who would you partner with to make it happen?</li>
+                                <li>How would you measure success in terms of SDG impact?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="proposal-form">
+                    <label for="proposal-text" class="proposal-label">
+                        Your Proposal
+                        <span class="char-count" id="char-count">0 characters</span>
+                    </label>
+                    <textarea 
+                        id="proposal-text" 
+                        class="proposal-textarea"
+                        placeholder="Write your proposal here... Reflect on your Build-Break-Fix experience, the AI tools you used, the ethical issues you discovered, how you fixed them, and how you combined AI with Sustainable Development Goals to create responsible solutions."
+                    ></textarea>
+                    <div class="proposal-actions">
+                        <button id="save-proposal-btn" class="btn-secondary">Save Draft</button>
+                        <button id="copy-proposal-btn" class="btn-secondary">Copy Text</button>
+                        <button id="export-proposal-btn" class="btn-secondary">Export as .txt</button>
+                    </div>
+                    <div id="save-status" class="save-status"></div>
+                </div>
+                <div class="proposal-navigation">
+                    <button id="back-to-final-results-btn" class="btn-secondary">← Back to Results</button>
+                    <button id="submit-proposal-btn" class="btn-primary">Submit Proposal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submission Confirmation Screen -->
+        <div id="submission-screen" class="screen">
+            <div class="screen-header">
+                <h2>Proposal Submitted Successfully! 🎉</h2>
+                <p class="subtitle">You've completed an amazing journey</p>
+            </div>
+            <div class="submission-content">
+                <div class="thank-you-card">
+                    <div class="thank-you-icon">🎉</div>
+                    <h3>Congratulations on Completing the Challenge!</h3>
+                    <p class="thank-you-message">
+                        Your proposal has been successfully submitted! You've shown incredible creativity, 
+                        ethical thinking, and a deep understanding of how AI can be combined with Sustainable 
+                        Development Goals to create positive change. We're excited to see your innovative ideas!
+                    </p>
+                    <div class="evaluation-notice">
+                        <h4>📋 Evaluation Process</h4>
+                        <p>
+                            Your game performance, answers, and proposal will be evaluated by our panel of judges. 
+                            Winners will be selected based on:
+                        </p>
+                        <ul>
+                            <li>Quality of AI solution design and implementation</li>
+                            <li>Depth of ethical considerations and risk identification</li>
+                            <li>Understanding of SDG principles and partnerships</li>
+                            <li>Clarity and thoughtfulness of the written proposal</li>
+                            <li>Overall impact and feasibility of proposed solutions</li>
+                        </ul>
+                        <p class="evaluation-timeline">
+                            <strong>Results will be announced soon!</strong>
+                        </p>
+                    </div>
+                    <div class="luck-message">
+                        <h4>🌟 Good Luck! 🌟</h4>
+                        <p>
+                            We wish you the best of luck in the evaluation! Your thoughtful approach to building, 
+                            breaking, and fixing AI solutions shows real potential. Keep innovating responsibly!
+                        </p>
+                    </div>
+                    <a href="https://unitar.org/" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-block; text-decoration: none; text-align: center;">Explore UNITAR Official Page →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confetti Container -->
+        <div id="confetti-container"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
+

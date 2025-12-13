@@ -1,0 +1,20 @@
+{
+  "name": "sdg-17-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend server for SDG 17 simulation game",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
+
