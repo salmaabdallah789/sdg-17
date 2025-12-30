@@ -51,7 +51,7 @@ const ProposalPage = () => {
     }
 
     const content = `
-AI & Social Impact Proposal - SDG 17 Simulation
+AI & Social Impact Proposal
 
 Scenario: ${finalSummary?.scenario.name || 'Unknown'}
 Date: ${new Date().toLocaleDateString()}
@@ -59,7 +59,7 @@ Date: ${new Date().toLocaleDateString()}
 ${proposal}
 
 ---
-Generated from SDG 17: Future Decisions Simulation
+Generated from AI & Social Impact Games: Future Decisions Simulation
     `.trim();
 
     const blob = new Blob([content], { type: 'text/plain' });

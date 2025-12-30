@@ -1,16 +1,11 @@
 import { scenarios } from '../models/scenarios.js';
 
 /**
- * Get all scenarios (summary list)
+ * Get all scenarios (full data needed for game)
  */
 export const getAllScenarios = () => {
-  return scenarios.map(scenario => ({
-    id: scenario.id,
-    name: scenario.name,
-    description: scenario.description,
-    challenges: scenario.challenges,
-    thumbnail: scenario.thumbnail
-  }));
+  // Return full scenario data including initialIndicators and rounds
+  return scenarios;
 };
 
 /**

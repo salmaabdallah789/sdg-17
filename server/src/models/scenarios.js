@@ -37,7 +37,8 @@ export const scenarios = [
             description: "Uses historical rainfall, river levels, and urban data to forecast flood risk",
             pros: "Can be very accurate if trained on good data",
             cons: "Might underperform in neighborhoods with little historical data",
-            icon: "📊"
+            icon: "📊",
+            cost: 150
           },
           {
             id: "emergency_alert_chatbot",
@@ -45,7 +46,8 @@ export const scenarios = [
             description: "Sends messages via SMS/WhatsApp/app to residents",
             pros: "Can reach many people quickly with tailored advice",
             cons: "Requires up-to-date contact information and language localization",
-            icon: "💬"
+            icon: "💬",
+            cost: 80
           },
           {
             id: "satellite_damage_detection",
@@ -53,7 +55,8 @@ export const scenarios = [
             description: "Analyzes satellite imagery to quickly estimate damage after floods",
             pros: "Fast assessment for allocating repairs & aid",
             cons: "Can miss details in informal settlements or non-registered areas",
-            icon: "🛰️"
+            icon: "🛰️",
+            cost: 200
           }
         ],
         decisionQuestions: [
@@ -208,7 +211,8 @@ export const scenarios = [
             description: "Analyzes satellite imagery to quickly estimate damage after floods",
             pros: "Fast assessment for allocating repairs & aid",
             cons: "Can miss details in informal settlements or non-registered areas",
-            icon: "🛰️"
+            icon: "🛰️",
+            cost: 200
           },
           {
             id: "aid_allocation_ai",
@@ -216,7 +220,8 @@ export const scenarios = [
             description: "Optimizes distribution of resources based on damage assessments and population data",
             pros: "Efficient resource allocation",
             cons: "May favor areas with better data, potentially excluding informal settlements",
-            icon: "📦"
+            icon: "📦",
+            cost: 120
           }
         ],
         decisionQuestions: [
@@ -303,7 +308,8 @@ export const scenarios = [
             description: "Predicts outbreak hotspots using mobility data and case reports",
             pros: "Accurate predictions help allocate resources",
             cons: "Requires extensive data collection, privacy concerns",
-            icon: "🔬"
+            icon: "🔬",
+            cost: 180
           },
           {
             id: "contact_tracing_app",
@@ -311,7 +317,8 @@ export const scenarios = [
             description: "Tracks close contacts using smartphone data",
             pros: "Effective at breaking transmission chains",
             cons: "Privacy invasive, excludes people without smartphones",
-            icon: "📱"
+            icon: "📱",
+            cost: 100
           }
         ],
         decisionQuestions: [
@@ -398,7 +405,8 @@ export const scenarios = [
             description: "Adaptive learning platform that personalizes content",
             pros: "Scales to reach many students",
             cons: "Requires internet, may lack cultural context",
-            icon: "🤖"
+            icon: "🤖",
+            cost: 140
           }
         ],
         decisionQuestions: [
@@ -474,7 +482,8 @@ export const scenarios = [
             description: "Matches displaced workers with new opportunities",
             pros: "Efficient job placement",
             cons: "May favor workers with existing skills",
-            icon: "💼"
+            icon: "💼",
+            cost: 90
           }
         ],
         decisionQuestions: [

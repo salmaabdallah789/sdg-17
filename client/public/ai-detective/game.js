@@ -1,4 +1,4 @@
-/* SDG 17: AI Detective - Game Logic
+/* AI & Social Impact Games: AI Detective - Game Logic
  * 
  * INSTRUCTIONS: Open index.html in a web browser to play.
  * No server required - runs entirely in the browser.
@@ -1596,7 +1596,7 @@ function calculateResults() {
         const partner = gameState.currentCase.partnerOptions.find(p => p.id === partId);
         if (partner) gameState.feasibilityScore += partner.impact * 0.5;
     });
-    gameState.feasibilityScore += gameState.selectedPartners.length * 5; // Partnership bonus (SDG 17)
+    gameState.feasibilityScore += gameState.selectedPartners.length * 5; // Partnership bonus
     
     // Penalties
     const redHerrings = gameState.evidence.filter(c => c.isRedHerring).length;
@@ -1683,7 +1683,7 @@ function generateCaseReport() {
         <strong>Proposed AI Solution:</strong> ${solution ? solution.name : 'None'}<br>
         ${solution ? solution.description : ''}<br><br>
         <strong>Ethics Safeguards:</strong> ${gameState.selectedEthics.length} selected<br><br>
-        <strong>Partners:</strong> ${gameState.selectedPartners.length} selected (SDG 17 Partnership focus)<br><br>
+        <strong>Partners:</strong> ${gameState.selectedPartners.length} selected (Partnership focus)<br><br>
         <strong>Conclusion:</strong> The investigation revealed systemic issues requiring 
         ethical AI solutions and community partnerships to address the ${caseData.sdg} challenge.
     `;
@@ -1916,7 +1916,7 @@ function exportProposal() {
     const badgeTitle = document.getElementById('badge-title') ? document.getElementById('badge-title').textContent : 'Detective';
     
     const content = `
-AI Detective Proposal - SDG 17
+AI Detective Proposal - AI & Social Impact Games
 
 Case: ${caseData.title}
 Date: ${new Date().toLocaleDateString()}
@@ -1928,7 +1928,7 @@ MY PROPOSAL:
 ${proposalText.value}
 
 ---
-Generated from SDG 17: AI Detective Game
+Generated from AI & Social Impact Games: AI Detective Game
     `.trim();
 
     const blob = new Blob([content], { type: 'text/plain' });

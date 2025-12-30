@@ -7,6 +7,7 @@ interface GameOption {
   icon: string;
   tagline: string;
   description: string;
+  whyChoose: string;
   features: string[];
   route: string;
   color: string;
@@ -28,13 +29,14 @@ const LandingPage = () => {
       icon: '🌍',
       tagline: 'Navigate crises with AI, budget constraints, and ethical dilemmas',
       description: "It's 2035. Your community is in crisis. You have AI, a shrinking budget, and tough choices. Can you help people without leaving anyone behind?",
+      whyChoose: 'Choose this if you want to learn how to make strategic decisions under pressure, understand resource allocation, and explore the ethical implications of using AI in public policy and community management.',
       features: [
         'Make strategic decisions with limited resources',
         'Deploy AI tools while managing trade-offs',
         'Balance efficiency, equity, and ethics',
         'See long-term consequences of your choices'
       ],
-      route: '/scenarios',
+      route: '/character',
       color: 'primary',
       gradient: 'from-primary-50 to-blue-50'
     },
@@ -44,6 +46,7 @@ const LandingPage = () => {
       icon: '🔍',
       tagline: 'Investigate mysterious crises using AI and data analysis',
       description: 'Why are school dropouts increasing? Why are hospital wait times exploding? Why is food waste rising? Analyze datasets, use AI logic to spot patterns, and identify the real social issue.',
+      whyChoose: 'Choose this if you want to develop data analysis skills, learn how to identify root causes of social problems, and practice using AI tools for investigative problem-solving in real-world scenarios.',
       features: [
         'Analyze real-world datasets',
         'Use AI pattern recognition',
@@ -60,6 +63,7 @@ const LandingPage = () => {
       icon: '🔧',
       tagline: 'Build AI ideas, discover problems, and fix them ethically',
       description: 'Build an AI idea fast, break it by discovering bias or harm, then fix it ethically. The winner is NOT the smartest idea—it\'s the most responsibly improved one.',
+      whyChoose: 'Choose this if you want to learn responsible AI development, practice identifying and fixing bias in AI systems, and understand how to iterate on solutions with ethics and social impact in mind.',
       features: [
         'Rapidly prototype AI solutions',
         'Identify bias and ethical issues',
@@ -91,13 +95,28 @@ const LandingPage = () => {
       >
         <img 
           src="/sdg17-logo.jpeg" 
-          alt="SDG 17 Logo" 
+          alt="AI & Social Impact Games Logo" 
           className="h-16 md:h-24 w-auto drop-shadow-2xl"
           onError={(e) => {
             // Fallback if image doesn't exist yet
             e.currentTarget.style.display = 'none';
           }}
         />
+      </motion.div>
+
+      {/* Developer link in top right */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="absolute top-4 right-4 md:top-6 md:right-6 z-20"
+      >
+        <button
+          onClick={() => navigate('/')}
+          className="px-4 py-2 text-sm bg-slate-800/80 hover:bg-slate-700/90 text-cyan-300 rounded-lg border border-cyan-500/30 transition-all hover:border-cyan-400/50 backdrop-blur-sm"
+        >
+          👨‍💻 Developer Docs
+        </button>
       </motion.div>
       
       <div className="container mx-auto px-4 py-12 relative z-10">
@@ -108,7 +127,7 @@ const LandingPage = () => {
           className="max-w-5xl mx-auto text-center mb-16"
         >
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-            SDG 17: AI & Social Impact Games
+            AI & Social Impact Games
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 mb-4 leading-relaxed">
             Explore future society challenges, AI tools, ethics, and long-term impact
@@ -148,9 +167,18 @@ const LandingPage = () => {
                   <p className="text-sm font-semibold text-cyan-300 mb-4 italic">
                     {game.tagline}
                   </p>
-                  <p className="text-blue-100 mb-6 leading-relaxed">
+                  <p className="text-blue-100 mb-4 leading-relaxed">
                     {game.description}
                   </p>
+                  
+                  <div className="mb-6 p-4 bg-blue-900/30 rounded-lg border border-cyan-500/20">
+                    <h3 className="font-semibold text-yellow-300 mb-2 text-sm uppercase tracking-wide flex items-center">
+                      <span className="mr-2">💡</span> Why Choose This?
+                    </h3>
+                    <p className="text-blue-100 text-sm leading-relaxed">
+                      {game.whyChoose}
+                    </p>
+                  </div>
                   
                   <div className="mb-6">
                     <h3 className="font-semibold text-cyan-200 mb-3 text-sm uppercase tracking-wide">

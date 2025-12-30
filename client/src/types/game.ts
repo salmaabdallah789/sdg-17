@@ -15,6 +15,8 @@ export interface AITool {
   pros: string;
   cons: string;
   icon: string;
+  insight?: string;
+  cost: number;
 }
 
 export interface DecisionOption {
@@ -64,6 +66,7 @@ export interface Decision {
   questionText: string;
   optionText: string;
   toolsUsed?: string[];
+  toolCosts?: Record<string, number>;
   effects: DecisionOption['effects'];
 }
 

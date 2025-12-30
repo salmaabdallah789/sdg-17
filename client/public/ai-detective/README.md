@@ -1,4 +1,4 @@
-# SDG 17: AI Detective
+# AI & Social Impact Games: AI Detective
 
 A browser-based mystery investigation game where players solve social impact mysteries using AI tools.
 
@@ -47,7 +47,7 @@ A browser-based mystery investigation game where players solve social impact mys
 
 ## Badges
 
-- **Partnership Pro**: High score with strong partnerships (SDG 17 focus)
+- **Partnership Pro**: High score with strong partnerships
 - **Ethics Guardian**: High ethics score
 - **Impact Architect**: High impact score
 - **Data Daredevil**: Good overall performance

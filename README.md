@@ -1,4 +1,4 @@
-# SDG 17: Future Decisions Simulation
+# AI & Social Impact Games: Future Decisions Simulation
 
 A browser-based decision-making simulation game where students explore future society challenges, AI tools, ethics, and long-term impact.
 

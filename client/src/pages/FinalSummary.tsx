@@ -45,20 +45,45 @@ const FinalSummary = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="card bg-gradient-to-br from-secondary-50 to-primary-50 border-2 border-secondary-200 mt-8 text-center"
+            className="card bg-gradient-to-br from-secondary-50 to-primary-50 border-2 border-secondary-200 mt-8"
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Next Step: Write Your Proposal</h3>
-            <p className="text-gray-600 mb-6">
-              Reflect on your experience and propose how AI can be used responsibly for social impact and sustainable development goals.
+            <h3 className="text-2xl font-bold text-gray-900 mb-3 text-center">Your Journey is Complete!</h3>
+            <p className="text-gray-600 mb-6 text-center">
+              You've navigated through all scenarios in 2035. Now it's time to reflect on your experience and write your proposal.
             </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/proposal')}
-              className="btn-primary text-lg px-8 py-4"
-            >
-              Write Your Proposal →
-            </motion.button>
+            
+            <div className="bg-white rounded-lg p-6 mb-6">
+              <h4 className="font-semibold text-gray-800 mb-4">What to Include in Your Proposal:</h4>
+              <ul className="space-y-2 text-gray-700 text-sm">
+                <li className="flex items-start">
+                  <span className="text-cyan-500 mr-2">•</span>
+                  <span>Reflect on the AI tools you used and their impact</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-cyan-500 mr-2">•</span>
+                  <span>Discuss the ethical dilemmas you faced</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-cyan-500 mr-2">•</span>
+                  <span>Propose how AI can be used responsibly for social impact</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-cyan-500 mr-2">•</span>
+                  <span>Share lessons learned from your decisions</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="text-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/proposal')}
+                className="btn-primary text-lg px-8 py-4"
+              >
+                Write Your Proposal →
+              </motion.button>
+            </div>
           </motion.div>
 
         </div>

@@ -10,6 +10,12 @@ interface GameContextType {
   finalSummary: FinalSummary | null;
   setFinalSummary: (summary: FinalSummary | null) => void;
   resetGame: () => void;
+  allScenarios: Scenario[];
+  setAllScenarios: (scenarios: Scenario[]) => void;
+  currentScenarioIndex: number;
+  setCurrentScenarioIndex: (index: number) => void;
+  completedScenarios: string[];
+  setCompletedScenarios: (scenarios: string[]) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -17,6 +23,9 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [finalSummary, setFinalSummary] = useState<FinalSummary | null>(null);
+  const [allScenarios, setAllScenarios] = useState<Scenario[]>([]);
+  const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
+  const [completedScenarios, setCompletedScenarios] = useState<string[]>([]);
 
   const startGame = (scenario: Scenario) => {
     const newGameState: GameState = {
@@ -64,7 +73,13 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         makeDecision,
         finalSummary,
         setFinalSummary,
-        resetGame
+        resetGame,
+        allScenarios,
+        setAllScenarios,
+        currentScenarioIndex,
+        setCurrentScenarioIndex,
+        completedScenarios,
+        setCompletedScenarios
       }}
     >
       {children}

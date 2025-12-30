@@ -1,4 +1,4 @@
-/* SDG 17: Build–Break–Fix (AI Edition) - Game Logic
+/* AI & Social Impact Games: Build–Break–Fix (AI Edition) - Game Logic
  * 
  * INSTRUCTIONS: Open index.html in a web browser to play.
  * No server required - runs entirely in the browser.
@@ -1438,7 +1438,7 @@ function exportProposal() {
     };
     
     const content = `
-Build–Break–Fix Proposal - SDG 17
+Build–Break–Fix Proposal - AI & Social Impact Games
 
 Date: ${new Date().toLocaleDateString()}
 Badge Earned: ${badgeTitle}
@@ -1455,7 +1455,7 @@ MY PROPOSAL:
 ${proposalText.value}
 
 ---
-Generated from SDG 17: Build–Break–Fix (AI Edition)
+Generated from AI & Social Impact Games: Build–Break–Fix (AI Edition)
     `.trim();
 
     const blob = new Blob([content], { type: 'text/plain' });
